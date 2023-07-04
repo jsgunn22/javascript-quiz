@@ -13,7 +13,7 @@ const quizCards = [
       "&ltscripting&gt",
       "&ltscript&gt",
     ],
-    correctAnswer: "&ltscript&gt", // this.answers[3],
+    correctAnswer: "<script>", // this.answers[3],
   },
   {
     question: "Where is the correct place to insert a JavaScript?",
@@ -23,7 +23,7 @@ const quizCards = [
       "&ltbody&gt",
       "&lthead&gt & &ltbody&gt",
     ],
-    correctAnswer: "&ltbody&gt", // this.answers[2],
+    correctAnswer: "<body>", // this.answers[2],
   },
   {
     question:
@@ -34,10 +34,10 @@ const quizCards = [
       '&ltscript src="xxx.js"&gt',
       '&ltscript href="xxx.js"&gt',
     ],
-    correctAnswer: '&ltscript src="xxx.js"&gt', // this.answers[2],
+    correctAnswer: '<script src="xxx.js">', // this.answers[2],
   },
   {
-    question: "The external JavaScript file must contain the <script> tag.",
+    question: "The external JavaScript file must contain the &ltscript&gt tag.",
     answers: ["True", "False"],
     correctAnswer: "False", // this.answers[1],
   },
@@ -113,45 +113,74 @@ welcomeParagragh.innerHTML =
 welcomeButton.innerHTML = "Start Quiz";
 
 function startQuiz() {
-  console.log("test");
-
   welcomeHeader.remove();
   welcomeParagragh.remove();
   welcomeButton.remove();
 
   let i = 0;
+  let correct; // need to get this to update
+  let score = 0;
 
   function nextCard() {
     if (i < quizCards.length) {
+      // clears the card's dom
       card.innerHTML = "";
 
-      for (let x = 0; x < card.children.length; x++) {
-        card.children[x].remove();
-      }
-
+      // gets card data
       let questionText = quizCards[i].question;
       let answersText = quizCards[i].answers;
-      // let correctAnswerText = quizCards[i].correctAnswer
 
+      //creates card elements
       let question = document.createElement("h2");
       let buttonsDiv = document.createElement("div");
 
+      // appends card data
       card.appendChild(question);
       card.appendChild(buttonsDiv);
       question.setAttribute("style", "margin-bottom: 24px; text-align: left");
       question.innerHTML = questionText;
       buttonsDiv.setAttribute("style", "margin-bottom: 24px");
 
+      if (i > 0) {
+        let correctIncorrect = document.createElement("p");
+        card.appendChild(correctIncorrect);
+        correctIncorrect.setAttribute("id", "correct-incorrect");
+        if (correct) {
+          correctIncorrect.innerHTML = "Correct!";
+        } else {
+          correctIncorrect.innerHTML = "Incorrect";
+        }
+      }
+
+      // appends card answer options buttons and adds event listeners
       for (let q = 0; q < quizCards[i].answers.length; q++) {
         let button = document.createElement("button");
         buttonsDiv.appendChild(button);
         button.innerHTML = answersText[q];
+
+        // condition for correct answer
+        let temp = false;
+        if (button.textContent == quizCards[i].correctAnswer) {
+          temp = true;
+        }
+
+        // updates correct variable
+        button.addEventListener("click", function () {
+          correct = temp;
+          if (correct) {
+            score++;
+          }
+          //   console.log(score);
+        });
+
+        // moves to next quiz card
         button.addEventListener("click", nextCard);
         button.setAttribute("style", "display: block; margin-bottom: 16px");
       }
-
+      // incriments to next card
       i++;
     } else {
+      // ends quiz cards and shows final score
       card.innerHTML = "";
 
       let finalText = document.createElement("h2");
@@ -167,7 +196,7 @@ function startQuiz() {
       inputDiv.appendChild(submitButton);
 
       finalText.innerHTML = "Your score is";
-      scoreText.innerHTML = "test";
+      scoreText.innerHTML = score;
       scoreText.setAttribute(
         "style",
         "color: var(--success-500); margin-bottom: 24px"

@@ -203,3 +203,13 @@ input {
   box-shadow: var(--card-shadow);
   padding: 56px;
 }
+
+#correct-incorrect {
+  color: var(--neutral-700);
+  font-family: var(--font-family-default);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-large-text-size);
+  line-height: 32px;
+  text-align: left;
+  border-top: solid 1px var(--neutral-700);
+}
