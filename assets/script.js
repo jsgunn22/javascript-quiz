@@ -156,11 +156,24 @@ function startQuiz() {
 
       let finalText = document.createElement("h2");
       let scoreText = document.createElement("h1");
+      let inputDiv = document.createElement("div");
+      let inputField = document.createElement("input");
+      let submitButton = document.createElement("button");
 
       card.appendChild(finalText);
       card.appendChild(scoreText);
+      card.appendChild(inputDiv);
+      inputDiv.appendChild(inputField);
+      inputDiv.appendChild(submitButton);
+
       finalText.innerHTML = "Your score is";
       scoreText.innerHTML = "test";
+      scoreText.setAttribute(
+        "style",
+        "color: var(--success-500); margin-bottom: 24px"
+      );
+      inputField.setAttribute("placeholder", "Type your initials");
+      submitButton.innerHTML = "Submit";
     }
   }
   nextCard();
