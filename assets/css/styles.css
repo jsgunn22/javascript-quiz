@@ -185,7 +185,6 @@ header {
 
 #card {
   width: 768px;
-  height: 200px;
   background-color: var(--neutral-000);
   color: var(--neutral-900);
   margin: 150px auto;
@@ -193,22 +192,8 @@ header {
   border-radius: 8px;
   box-shadow: var(--card-shadow);
   padding: 56px;
+}
 
-  & h2 {
-    text-align: center;
-    margin-bottom: 24px;
-  }
-
-  & p {
-    text-align: center;
-    margin-bottom: 24px;
-  }
-
-  & button {
-    margin: 0;
-    position: absolute;
-    left: 50%;
-    -ms-transform: translate(-50%);
-    transform: translateX(-50%);
-  }
+#buttons-div {
+  display: block;
 }
