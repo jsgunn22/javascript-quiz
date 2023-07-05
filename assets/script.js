@@ -154,7 +154,7 @@ welcomeButton.addEventListener("click", startQuiz);
 //
 welcomeHeader.innerHTML = "Javascript Speed Coding Quiz";
 welcomeParagragh.innerHTML =
-  "Answer as many Javascript multiple choice questions as you can within the given time frame. If a question is answered wrong the timer will go down five seconds. When you are complete you will be given the opportunity to save your score and compare it to others.";
+  "Answer as many Javascript multiple choice questions as you can within the given time frame. When you are complete you will be given the opportunity to save your score and compare it to others.";
 welcomeButton.innerHTML = "Start Quiz";
 
 // renders list of 5 most recent scores
