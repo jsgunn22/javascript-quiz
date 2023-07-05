@@ -157,8 +157,17 @@ welcomeParagragh.innerHTML =
   "Answer as many Javascript multiple choice questions as you can within the given time frame. If a question is answered wrong the timer will go down five seconds. When you are complete you will be given the opportunity to save your score and compare it to others.";
 welcomeButton.innerHTML = "Start Quiz";
 
-// renders list of high scores
+// renders list of 5 most recent scores
 function viewHighScores() {
+  // Changed top nav text button and allows for app reload
+  let buttonReassign = document.getElementById("high-scores");
+  buttonReassign.innerHTML = "Back to Main";
+  buttonReassign.addEventListener("click", refresh);
+
+  function refresh() {
+    location.reload();
+  }
+
   card.innerHTML = "";
   card.setAttribute("style", "text-align: center");
 
@@ -210,11 +219,37 @@ function viewHighScores() {
 
       scoreItemDiv.setAttribute("class", "score-item-div");
     }
+    // Creates button section at bottom of list
+    let buttonsDiv = document.createElement("div");
+    let goBackButton = document.createElement("button");
+    let clearButton = document.createElement("button");
+
+    card.appendChild(buttonsDiv);
+    buttonsDiv.setAttribute(
+      "style",
+      "width: 100%; display: flex; justify-content: space-between"
+    );
+    buttonsDiv.appendChild(goBackButton);
+    buttonsDiv.appendChild(clearButton);
+
+    goBackButton.innerHTML = "Go Back";
+    clearButton.innerHTML = "Clear Recent Scores";
+    clearButton.setAttribute("style", "background-color: var(--danger-500)");
+
+    goBackButton.addEventListener("click", refresh);
   } else {
     let highScoreHeader = document.createElement("h2");
+    let goBackButton = document.createElement("button");
+
     card.appendChild(highScoreHeader);
+    card.appendChild(goBackButton);
     highScoreHeader.innerHTML = "No Scores have been logged";
-    highScoreHeader.setAttribute("style", "color: var(--neutral-700)");
+    highScoreHeader.setAttribute(
+      "style",
+      "color: var(--neutral-700); margin-bottom: 24px"
+    );
+    goBackButton.innerHTML = "Go Back";
+    goBackButton.addEventListener("click", refresh);
   }
 }
 
