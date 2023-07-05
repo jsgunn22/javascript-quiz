@@ -84,6 +84,45 @@ const quizCards = [
   },
 ];
 
+// temporary
+let scores = [
+  {
+    initial: "JSG",
+    score: 10,
+    time: 15,
+  },
+  {
+    initial: "JSG",
+    score: 10,
+    time: 15,
+  },
+  {
+    initial: "JSG",
+    score: 10,
+    time: 15,
+  },
+  {
+    initial: "JSG",
+    score: 10,
+    time: 15,
+  },
+  {
+    initial: "JSG",
+    score: 10,
+    time: 15,
+  },
+  {
+    initial: "JSG",
+    score: 10,
+    time: 15,
+  },
+  {
+    initial: "JSG",
+    score: 10,
+    time: 15,
+  },
+]; // temporary
+
 let body = document.body;
 
 // Creates welcome card and message
@@ -120,7 +159,63 @@ welcomeButton.innerHTML = "Start Quiz";
 
 // renders list of high scores
 function viewHighScores() {
-  console.log("test");
+  card.innerHTML = "";
+  card.setAttribute("style", "text-align: center");
+
+  // gets the number of scores stored in the local
+
+  let numberOfScores = scores.length;
+
+  if (numberOfScores > 5) {
+    numberOfScores = 5;
+  }
+
+  if (scores.length > 0) {
+    // sets table column headers
+    let highScoreHeader = document.createElement("h2");
+    card.appendChild(highScoreHeader);
+    highScoreHeader.innerHTML = numberOfScores + " Most Recent Scores";
+    highScoreHeader.setAttribute("style", "margin-bottom: 24px");
+
+    let tableHeaderDiv = document.createElement("div");
+    let tableHeaderInitial = document.createElement("h3");
+    let tableHeaderScore = document.createElement("h3");
+    let tableHeaderTime = document.createElement("h3");
+
+    card.appendChild(tableHeaderDiv);
+    tableHeaderDiv.appendChild(tableHeaderInitial);
+    tableHeaderDiv.appendChild(tableHeaderScore);
+    tableHeaderDiv.appendChild(tableHeaderTime);
+
+    tableHeaderInitial.innerHTML = "Initials";
+    tableHeaderScore.innerHTML = "Score";
+    tableHeaderTime.innerHTML = "Remaining Time";
+
+    tableHeaderDiv.setAttribute("id", "table-header-div");
+
+    for (let s = 0; s < numberOfScores; s++) {
+      let scoreItemDiv = document.createElement("div");
+      let scoreItemInitial = document.createElement("h2");
+      let scoreItemScore = document.createElement("h2");
+      let scoreItemTime = document.createElement("h2");
+
+      card.appendChild(scoreItemDiv);
+      scoreItemDiv.appendChild(scoreItemInitial);
+      scoreItemDiv.appendChild(scoreItemScore);
+      scoreItemDiv.appendChild(scoreItemTime);
+
+      scoreItemInitial.innerHTML = scores[s].initial;
+      scoreItemScore.innerHTML = scores[s].score;
+      scoreItemTime.innerHTML = scores[s].time;
+
+      scoreItemDiv.setAttribute("class", "score-item-div");
+    }
+  } else {
+    let highScoreHeader = document.createElement("h2");
+    card.appendChild(highScoreHeader);
+    highScoreHeader.innerHTML = "No Scores have been logged";
+    highScoreHeader.setAttribute("style", "color: var(--neutral-700)");
+  }
 }
 
 function startQuiz() {
