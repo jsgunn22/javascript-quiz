@@ -105,12 +105,23 @@ welcomeParagragh.setAttribute(
   "style",
   "text-align: center; margin-bottom: 24px"
 );
+
+// clickables
+document
+  .getElementById("high-scores")
+  .addEventListener("click", viewHighScores);
 welcomeButton.addEventListener("click", startQuiz);
 
+//
 welcomeHeader.innerHTML = "Javascript Speed Coding Quiz";
 welcomeParagragh.innerHTML =
   "Answer as many Javascript multiple choice questions as you can within the given time frame. If a question is answered wrong the timer will go down five seconds. When you are complete you will be given the opportunity to save your score and compare it to others.";
 welcomeButton.innerHTML = "Start Quiz";
+
+// renders list of high scores
+function viewHighScores() {
+  console.log("test");
+}
 
 function startQuiz() {
   welcomeHeader.remove();
