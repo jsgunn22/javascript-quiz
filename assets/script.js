@@ -121,6 +121,48 @@ function startQuiz() {
   let correct; // need to get this to update
   let score = 0;
 
+  let timeLeft = 15;
+  let secondsRemaining = document.getElementById("seconds-remaining");
+  secondsRemaining.innerHTML = timeLeft;
+
+  var countDown = setInterval(function () {
+    if (timeLeft > 0) {
+      timeLeft--;
+      secondsRemaining.innerHTML = timeLeft;
+    } else {
+      clearInterval(countDown);
+      final("You ran out of time");
+    }
+  }, 1000);
+
+  function final(messageProp) {
+    card.innerHTML = "";
+
+    let messageText = document.createElement("h3");
+    let finalText = document.createElement("h2");
+    let scoreText = document.createElement("h1");
+    let inputDiv = document.createElement("div");
+    let inputField = document.createElement("input");
+    let submitButton = document.createElement("button");
+
+    card.appendChild(messageText);
+    card.appendChild(finalText);
+    card.appendChild(scoreText);
+    card.appendChild(inputDiv);
+    inputDiv.appendChild(inputField);
+    inputDiv.appendChild(submitButton);
+
+    messageText.innerHTML = messageProp;
+    finalText.innerHTML = "Your score is";
+    scoreText.innerHTML = score;
+    scoreText.setAttribute(
+      "style",
+      "color: var(--success-500); margin-bottom: 24px"
+    );
+    inputField.setAttribute("placeholder", "Type your initials");
+    submitButton.innerHTML = "Submit";
+  }
+
   function nextCard() {
     if (i < quizCards.length) {
       // clears the card's dom
@@ -180,29 +222,8 @@ function startQuiz() {
       // incriments to next card
       i++;
     } else {
-      // ends quiz cards and shows final score
-      card.innerHTML = "";
-
-      let finalText = document.createElement("h2");
-      let scoreText = document.createElement("h1");
-      let inputDiv = document.createElement("div");
-      let inputField = document.createElement("input");
-      let submitButton = document.createElement("button");
-
-      card.appendChild(finalText);
-      card.appendChild(scoreText);
-      card.appendChild(inputDiv);
-      inputDiv.appendChild(inputField);
-      inputDiv.appendChild(submitButton);
-
-      finalText.innerHTML = "Your score is";
-      scoreText.innerHTML = score;
-      scoreText.setAttribute(
-        "style",
-        "color: var(--success-500); margin-bottom: 24px"
-      );
-      inputField.setAttribute("placeholder", "Type your initials");
-      submitButton.innerHTML = "Submit";
+      // ends quiz cards and shows final score with message passed in
+      final("You completed all of the questions");
     }
   }
   nextCard();
