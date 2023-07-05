@@ -118,7 +118,7 @@ function startQuiz() {
   welcomeButton.remove();
 
   let i = 0;
-  let correct; // need to get this to update
+  let correct; // * updates per button click based on
   let score = 0;
 
   let timeLeft = 15;
@@ -131,10 +131,12 @@ function startQuiz() {
       secondsRemaining.innerHTML = timeLeft;
     } else {
       clearInterval(countDown);
+      // ends quiz and passes in the message
       final("You ran out of time");
     }
   }, 1000);
 
+  // final card / conditional for whether the time ran out of if the user completed all messages
   function final(messageProp) {
     card.innerHTML = "";
 
@@ -183,6 +185,7 @@ function startQuiz() {
       question.innerHTML = questionText;
       buttonsDiv.setAttribute("style", "margin-bottom: 24px");
 
+      // * updates
       if (i > 0) {
         let correctIncorrect = document.createElement("p");
         card.appendChild(correctIncorrect);
@@ -203,10 +206,11 @@ function startQuiz() {
         // condition for correct answer
         let temp = false;
         if (button.textContent == quizCards[i].correctAnswer) {
+          // if the button text matches the key value pair for correctAnswer
           temp = true;
         }
 
-        // updates correct variable
+        // * updates correct variable and incriments score
         button.addEventListener("click", function () {
           correct = temp;
           if (correct) {
