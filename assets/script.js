@@ -132,7 +132,7 @@ function startQuiz() {
   let correct; // * updates per button click based on
   let score = 0;
 
-  let timeLeft = 1;
+  let timeLeft = 60;
   let secondsRemaining = document.getElementById("seconds-remaining");
   secondsRemaining.innerHTML = timeLeft;
 
@@ -156,6 +156,7 @@ function startQuiz() {
     let scoreDiv = document.createElement("div");
     let scoreText = document.createElement("h1");
     let ofScoreText = document.createElement("h3");
+    let timeRem = document.createElement("p");
     let inputDiv = document.createElement("div");
     let inputField = document.createElement("input");
     let submitButton = document.createElement("button");
@@ -165,6 +166,7 @@ function startQuiz() {
     card.appendChild(scoreDiv);
     scoreDiv.appendChild(scoreText);
     scoreDiv.appendChild(ofScoreText);
+    card.appendChild(timeRem);
     card.appendChild(inputDiv);
     inputDiv.appendChild(inputField);
     inputDiv.appendChild(submitButton);
@@ -176,7 +178,10 @@ function startQuiz() {
     finalText.innerHTML = "Your score is";
 
     // sets score to show score vs possible total
-    scoreDiv.setAttribute("style", "display: flex; justify-content: center;");
+    scoreDiv.setAttribute(
+      "style",
+      "display: flex; justify-content: center; margin-bottom: -12px"
+    );
     scoreText.innerHTML = score;
     scoreText.setAttribute(
       "style",
@@ -188,8 +193,19 @@ function startQuiz() {
       "color: var(--neutral-700); margin-top: 10px"
     );
 
+    timeRem.setAttribute(
+      "style",
+      "color: var(--neutral-700); margin-bottom: 8px"
+    );
+
+    if (timeLeft > 0) {
+      timeRem.innerHTML = "with " + timeLeft + " seconds to spare";
+    }
+
     inputField.setAttribute("placeholder", "Type your initials");
     submitButton.innerHTML = "Submit";
+
+    submitButton.addEventListener("click", viewHighScores);
   }
 
   function nextCard() {
@@ -254,7 +270,11 @@ function startQuiz() {
       i++;
     } else {
       // ends quiz cards and shows final score with message passed in
-      final("You completed all of the questions");
+      if (score === quizCards.length) {
+        final("A perfect score!");
+      } else {
+        final("You completed all of the questions");
+      }
     }
   }
   nextCard();
