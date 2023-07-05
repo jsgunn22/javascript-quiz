@@ -132,7 +132,7 @@ function startQuiz() {
   let correct; // * updates per button click based on
   let score = 0;
 
-  let timeLeft = 15;
+  let timeLeft = 1;
   let secondsRemaining = document.getElementById("seconds-remaining");
   secondsRemaining.innerHTML = timeLeft;
 
@@ -151,27 +151,43 @@ function startQuiz() {
   function final(messageProp) {
     card.innerHTML = "";
 
-    let messageText = document.createElement("h3");
+    let messageText = document.createElement("p");
     let finalText = document.createElement("h2");
+    let scoreDiv = document.createElement("div");
     let scoreText = document.createElement("h1");
+    let ofScoreText = document.createElement("h3");
     let inputDiv = document.createElement("div");
     let inputField = document.createElement("input");
     let submitButton = document.createElement("button");
 
     card.appendChild(messageText);
     card.appendChild(finalText);
-    card.appendChild(scoreText);
+    card.appendChild(scoreDiv);
+    scoreDiv.appendChild(scoreText);
+    scoreDiv.appendChild(ofScoreText);
     card.appendChild(inputDiv);
     inputDiv.appendChild(inputField);
     inputDiv.appendChild(submitButton);
 
+    messageText.setAttribute("style", "color: var(--neutral-700)");
+    messageText.setAttribute("class", "large-text");
+
     messageText.innerHTML = messageProp;
     finalText.innerHTML = "Your score is";
+
+    // sets score to show score vs possible total
+    scoreDiv.setAttribute("style", "display: flex; justify-content: center;");
     scoreText.innerHTML = score;
     scoreText.setAttribute(
       "style",
-      "color: var(--success-500); margin-bottom: 24px"
+      "color: var(--success-500); margin-bottom: 24px; margin-right: 8px"
     );
+    ofScoreText.innerHTML = "/ " + quizCards.length;
+    ofScoreText.setAttribute(
+      "style",
+      "color: var(--neutral-700); margin-top: 10px"
+    );
+
     inputField.setAttribute("placeholder", "Type your initials");
     submitButton.innerHTML = "Submit";
   }
