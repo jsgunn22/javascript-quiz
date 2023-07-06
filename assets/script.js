@@ -84,45 +84,6 @@ const quizCards = [
   },
 ];
 
-// // temporary
-// let scores = [
-//   {
-//     initial: "JSG",
-//     score: 10,
-//     time: 15,
-//   },
-//   {
-//     initial: "JSG",
-//     score: 10,
-//     time: 15,
-//   },
-//   {
-//     initial: "JSG",
-//     score: 10,
-//     time: 15,
-//   },
-//   {
-//     initial: "JSG",
-//     score: 10,
-//     time: 15,
-//   },
-//   {
-//     initial: "JSG",
-//     score: 10,
-//     time: 15,
-//   },
-//   {
-//     initial: "JSG",
-//     score: 10,
-//     time: 15,
-//   },
-//   {
-//     initial: "JSG",
-//     score: 10,
-//     time: 15,
-//   },
-// ]; // temporary
-
 let body = document.body;
 
 // Creates welcome card and message
@@ -146,27 +107,18 @@ welcomeParagragh.setAttribute(
 );
 
 // clickables
-document
-  .getElementById("high-scores")
-  .addEventListener("click", viewHighScores);
+// prettier-ignore
+document.getElementById("high-scores").addEventListener("click", viewHighScores);
 welcomeButton.addEventListener("click", startQuiz);
 
-//
+// Prints card upon page load
 welcomeHeader.innerHTML = "Javascript Speed Coding Quiz";
 welcomeParagragh.innerHTML =
-  "Answer as many Javascript multiple choice questions as you can within the given time frame. When you are complete you will be given the opportunity to save your score and compare it to others.";
+  "Answer as many Javascript multiple choice questions as you can within the given time frame. If a question is answered wrong the timer will lose 5 seconds. When you are complete you will be given the opportunity to save your score and compare it to others.";
 welcomeButton.innerHTML = "Start Quiz";
 
 // renders list of 5 most recent scores
 function viewHighScores() {
-  let scores = JSON.parse(localStorage.getItem("allScores"));
-
-  if (scores == null) {
-    scores = [];
-  }
-
-  console.log(scores);
-
   // Changed top nav text button and allows for app reload
   let buttonReassign = document.getElementById("high-scores");
   buttonReassign.innerHTML = "Back to Main";
@@ -176,17 +128,23 @@ function viewHighScores() {
     location.reload();
   }
 
+  // clears card for new DOM
   card.innerHTML = "";
   card.setAttribute("style", "text-align: center");
 
+  // gets scores stored in local storage
+  let scores = JSON.parse(localStorage.getItem("allScores"));
+
   // gets the number of scores stored in the local
-
   let numberOfScores = scores.length;
-
-  if (numberOfScores > 5) {
+  // sets an empty localStorage length to 0 and resets score count to show max 5 recent scores
+  if (numberOfScores == null) {
+    numberOfScores = 0;
+  } else if (numberOfScores > 5) {
     numberOfScores = 5;
   }
 
+  // conditional for no scores saved in localStorage empty state
   if (numberOfScores == 0) {
     let highScoreHeader = document.createElement("h2");
     let goBackButton = document.createElement("button");
@@ -223,8 +181,10 @@ function viewHighScores() {
 
     tableHeaderDiv.setAttribute("id", "table-header-div");
 
+    // reverses the array of scores stored in the localStorage so the most recent will appear at the top
     scores.reverse();
 
+    // prints up to 5 of the most recent scores
     for (let s = 0; s < numberOfScores; s++) {
       let scoreItemDiv = document.createElement("div");
       let scoreItemInitial = document.createElement("h2");
@@ -258,6 +218,8 @@ function viewHighScores() {
     goBackButton.innerHTML = "Go Back";
     clearButton.innerHTML = "Clear Recent Scores";
     clearButton.setAttribute("style", "background-color: var(--danger-500)");
+
+    // allows user to clear local storage
     clearButton.addEventListener("click", function () {
       localStorage.clear();
       viewHighScores();
@@ -273,13 +235,14 @@ function startQuiz() {
   welcomeButton.remove();
 
   let i = 0;
-  let correct; // * updates per button click based on
+  let correct; // * updates per button click based on answer selection
   let score = 0;
 
   let timeLeft = 60;
   let secondsRemaining = document.getElementById("seconds-remaining");
   secondsRemaining.innerHTML = timeLeft;
 
+  // time counter and conditional to render final card when time runs out
   var countDown = setInterval(function () {
     if (timeLeft > 0) {
       timeLeft--;
@@ -354,20 +317,21 @@ function startQuiz() {
 
     clearInterval(countDown);
 
+    // pushes score info to local storage
     function pushToStorage() {
       let myScore = {
         myInitials: inputField.value,
         myScore: score,
         myTime: timeLeft,
       };
-
+      // gets previous scores and parses to an array
       var existingScores = JSON.parse(localStorage.getItem("allScores"));
       if (existingScores === null) {
         existingScores = [];
       }
       localStorage.setItem("myScore", JSON.stringify(myScore));
-      existingScores.push(myScore);
-      localStorage.setItem("allScores", JSON.stringify(existingScores));
+      existingScores.push(myScore); // pushes newest score to array
+      localStorage.setItem("allScores", JSON.stringify(existingScores)); // pushes updated array to localStorage
     }
   }
 
@@ -391,7 +355,7 @@ function startQuiz() {
       question.innerHTML = questionText;
       buttonsDiv.setAttribute("style", "margin-bottom: 24px");
 
-      // * updates
+      // * updates card to let user know if they got the previous question right or wrong.
       if (i > 0) {
         let correctIncorrect = document.createElement("p");
         card.appendChild(correctIncorrect);
@@ -399,7 +363,7 @@ function startQuiz() {
         if (correct) {
           correctIncorrect.innerHTML = "Correct!";
         } else {
-          correctIncorrect.innerHTML = "Incorrect";
+          correctIncorrect.innerHTML = "Incorrect... - 5 seconds";
         }
       }
 
@@ -421,8 +385,10 @@ function startQuiz() {
           correct = temp;
           if (correct) {
             score++;
+          } else {
+            timeLeft = timeLeft - 5;
+            secondsRemaining.innerHTML = timeLeft;
           }
-          //   console.log(score);
         });
 
         // moves to next quiz card
