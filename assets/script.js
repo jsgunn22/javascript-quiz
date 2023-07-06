@@ -84,44 +84,44 @@ const quizCards = [
   },
 ];
 
-// temporary
-let scores = [
-  {
-    initial: "JSG",
-    score: 10,
-    time: 15,
-  },
-  {
-    initial: "JSG",
-    score: 10,
-    time: 15,
-  },
-  {
-    initial: "JSG",
-    score: 10,
-    time: 15,
-  },
-  {
-    initial: "JSG",
-    score: 10,
-    time: 15,
-  },
-  {
-    initial: "JSG",
-    score: 10,
-    time: 15,
-  },
-  {
-    initial: "JSG",
-    score: 10,
-    time: 15,
-  },
-  {
-    initial: "JSG",
-    score: 10,
-    time: 15,
-  },
-]; // temporary
+// // temporary
+// let scores = [
+//   {
+//     initial: "JSG",
+//     score: 10,
+//     time: 15,
+//   },
+//   {
+//     initial: "JSG",
+//     score: 10,
+//     time: 15,
+//   },
+//   {
+//     initial: "JSG",
+//     score: 10,
+//     time: 15,
+//   },
+//   {
+//     initial: "JSG",
+//     score: 10,
+//     time: 15,
+//   },
+//   {
+//     initial: "JSG",
+//     score: 10,
+//     time: 15,
+//   },
+//   {
+//     initial: "JSG",
+//     score: 10,
+//     time: 15,
+//   },
+//   {
+//     initial: "JSG",
+//     score: 10,
+//     time: 15,
+//   },
+// ]; // temporary
 
 let body = document.body;
 
@@ -159,6 +159,14 @@ welcomeButton.innerHTML = "Start Quiz";
 
 // renders list of 5 most recent scores
 function viewHighScores() {
+  let scores = JSON.parse(localStorage.getItem("allScores"));
+
+  if (scores == null) {
+    scores = [];
+  }
+
+  console.log(scores);
+
   // Changed top nav text button and allows for app reload
   let buttonReassign = document.getElementById("high-scores");
   buttonReassign.innerHTML = "Back to Main";
@@ -179,7 +187,20 @@ function viewHighScores() {
     numberOfScores = 5;
   }
 
-  if (scores.length > 0) {
+  if (numberOfScores == 0) {
+    let highScoreHeader = document.createElement("h2");
+    let goBackButton = document.createElement("button");
+
+    card.appendChild(highScoreHeader);
+    card.appendChild(goBackButton);
+    highScoreHeader.innerHTML = "No Scores have been logged";
+    highScoreHeader.setAttribute(
+      "style",
+      "color: var(--neutral-700); margin-bottom: 24px"
+    );
+    goBackButton.innerHTML = "Go Back";
+    goBackButton.addEventListener("click", refresh);
+  } else {
     // sets table column headers
     let highScoreHeader = document.createElement("h2");
     card.appendChild(highScoreHeader);
@@ -202,6 +223,8 @@ function viewHighScores() {
 
     tableHeaderDiv.setAttribute("id", "table-header-div");
 
+    scores.reverse();
+
     for (let s = 0; s < numberOfScores; s++) {
       let scoreItemDiv = document.createElement("div");
       let scoreItemInitial = document.createElement("h2");
@@ -213,9 +236,9 @@ function viewHighScores() {
       scoreItemDiv.appendChild(scoreItemScore);
       scoreItemDiv.appendChild(scoreItemTime);
 
-      scoreItemInitial.innerHTML = scores[s].initial;
-      scoreItemScore.innerHTML = scores[s].score;
-      scoreItemTime.innerHTML = scores[s].time;
+      scoreItemInitial.innerHTML = scores[s].myInitials;
+      scoreItemScore.innerHTML = scores[s].myScore;
+      scoreItemTime.innerHTML = scores[s].myTime;
 
       scoreItemDiv.setAttribute("class", "score-item-div");
     }
@@ -235,20 +258,11 @@ function viewHighScores() {
     goBackButton.innerHTML = "Go Back";
     clearButton.innerHTML = "Clear Recent Scores";
     clearButton.setAttribute("style", "background-color: var(--danger-500)");
+    clearButton.addEventListener("click", function () {
+      localStorage.clear();
+      viewHighScores();
+    });
 
-    goBackButton.addEventListener("click", refresh);
-  } else {
-    let highScoreHeader = document.createElement("h2");
-    let goBackButton = document.createElement("button");
-
-    card.appendChild(highScoreHeader);
-    card.appendChild(goBackButton);
-    highScoreHeader.innerHTML = "No Scores have been logged";
-    highScoreHeader.setAttribute(
-      "style",
-      "color: var(--neutral-700); margin-bottom: 24px"
-    );
-    goBackButton.innerHTML = "Go Back";
     goBackButton.addEventListener("click", refresh);
   }
 }
@@ -335,7 +349,26 @@ function startQuiz() {
     inputField.setAttribute("placeholder", "Type your initials");
     submitButton.innerHTML = "Submit";
 
+    submitButton.addEventListener("click", pushToStorage);
     submitButton.addEventListener("click", viewHighScores);
+
+    clearInterval(countDown);
+
+    function pushToStorage() {
+      let myScore = {
+        myInitials: inputField.value,
+        myScore: score,
+        myTime: timeLeft,
+      };
+
+      var existingScores = JSON.parse(localStorage.getItem("allScores"));
+      if (existingScores === null) {
+        existingScores = [];
+      }
+      localStorage.setItem("myScore", JSON.stringify(myScore));
+      existingScores.push(myScore);
+      localStorage.setItem("allScores", JSON.stringify(existingScores));
+    }
   }
 
   function nextCard() {
