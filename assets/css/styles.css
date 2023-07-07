@@ -244,3 +244,8 @@ input {
     width: 100%;
   }
 }
+
+.answer-hover:hover {
+  transition: 0.1s;
+  margin-left: 2px;
+}

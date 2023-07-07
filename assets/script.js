@@ -112,7 +112,7 @@ document.getElementById("high-scores").addEventListener("click", viewHighScores)
 welcomeButton.addEventListener("click", startQuiz);
 
 // Prints card upon page load
-welcomeHeader.innerHTML = "Javascript Speed Coding Quiz";
+welcomeHeader.innerHTML = "Javascript Coding Speed Quiz";
 welcomeParagragh.innerHTML =
   "Answer as many Javascript multiple choice questions as you can within the given time frame. If a question is answered wrong the timer will lose 5 seconds. When you are complete you will be given the opportunity to save your score and compare it to others.";
 welcomeButton.innerHTML = "Start Quiz";
@@ -392,6 +392,7 @@ function startQuiz() {
             secondsRemaining.innerHTML = timeLeft;
           }
         });
+        button.classList.add("answer-hover");
 
         // moves to next quiz card
         button.addEventListener("click", nextCard);
