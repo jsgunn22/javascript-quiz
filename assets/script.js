@@ -3,7 +3,7 @@ const quizCards = [
     question:
       "In JavaScript, _______s are used to store a collection of multiple items under a single variable name.",
     answers: ["Object", "Array", "Loop", "Function"],
-    correctAnswer: "Array", // this.answers[1],
+    correctAnswer: "Array",
   },
   {
     question: "Inside which HTML element do we put the JavaScript?",
@@ -13,7 +13,7 @@ const quizCards = [
       "&ltscripting&gt",
       "&ltscript&gt",
     ],
-    correctAnswer: "<script>", // this.answers[3],
+    correctAnswer: "<script>",
   },
   {
     question: "Where is the correct place to insert a JavaScript?",
@@ -23,7 +23,7 @@ const quizCards = [
       "&ltbody&gt",
       "&lthead&gt & &ltbody&gt",
     ],
-    correctAnswer: "<body>", // this.answers[2],
+    correctAnswer: "<body>",
   },
   {
     question:
@@ -34,12 +34,12 @@ const quizCards = [
       '&ltscript src="xxx.js"&gt',
       '&ltscript href="xxx.js"&gt',
     ],
-    correctAnswer: '<script src="xxx.js">', // this.answers[2],
+    correctAnswer: '<script src="xxx.js">',
   },
   {
     question: "The external JavaScript file must contain the &ltscript&gt tag.",
     answers: ["True", "False"],
-    correctAnswer: "False", // this.answers[1],
+    correctAnswer: "False",
   },
   {
     question: 'How do you write "Hello World" in an alert box?',
@@ -49,7 +49,7 @@ const quizCards = [
       'msg("Hello World")',
       'alertBox("Hello World")',
     ],
-    correctAnswer: 'alert("Hello World")', // this.answers[1],
+    correctAnswer: 'alert("Hello World")',
   },
   {
     question: "How do you create a function in JavaScript?",
@@ -59,7 +59,7 @@ const quizCards = [
       "function:myFunction()",
       "myFunction = function()",
     ],
-    correctAnswer: "function myFunction()", // this.answers[0],
+    correctAnswer: "function myFunction()",
   },
   {
     question: 'How do you call a function called "myFuction"?',
@@ -69,18 +69,18 @@ const quizCards = [
       "get myFuntion()",
       "call function myFunction()",
     ],
-    correctAnswer: "myFunction()", // this.answers[1],
+    correctAnswer: "myFunction()",
   },
   {
     question: "How do we write an IF statement in JavaScript?",
     answers: ["if (i == 5)", "if i == 5 then", "if i = 5", "if i = 5 then"],
-    correctAnswer: "if (i == 5)", // this.answers[0],
+    correctAnswer: "if (i == 5)",
   },
   {
     question:
       'How to write an IF statement for executing some code if "i" is NOT equal to 5?',
     answers: ["if i <> 5", "if i =! 5 then", "if (i <> 5)", "if (i != 5)"],
-    correctAnswer: "if (i != 5)", // this.answers[3],
+    correctAnswer: "if (i != 5)",
   },
 ];
 
