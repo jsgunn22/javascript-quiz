@@ -22,4 +22,4 @@ No license on this repo
 
 Link to delpoyed application https://jsgunn22.github.io/javascript-quiz/
 
-![Screen shot of quiz card](image.png)
+![Screen shot of quiz card](./assets/images/image.png)
