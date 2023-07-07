@@ -135,12 +135,14 @@ function viewHighScores() {
   // gets scores stored in local storage
   let scores = JSON.parse(localStorage.getItem("allScores"));
 
+  // prevents crash
+  if (scores == null) {
+    scores = [];
+  }
   // gets the number of scores stored in the local
   let numberOfScores = scores.length;
   // sets an empty localStorage length to 0 and resets score count to show max 5 recent scores
-  if (numberOfScores == null) {
-    numberOfScores = 0;
-  } else if (numberOfScores > 5) {
+  if (numberOfScores > 5) {
     numberOfScores = 5;
   }
 
